@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ProxyUP88 - Server</title>
+    <title>ProxyUP88 - Hacker Mode</title>
     <style>
         /* ===== RESET & BASE ===== */
         * {
@@ -345,6 +345,37 @@
         }
 
         /* ======================================== */
+        /* ===== FOOTER COPYRIGHT ===== */
+        /* ======================================== */
+
+        .footer {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 255, 65, 0.15);
+            text-align: center;
+            color: rgba(0, 255, 65, 0.3);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .footer span {
+            color: #00ff41;
+            opacity: 0.5;
+        }
+
+        .footer .heart {
+            color: #ff4444;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* ======================================== */
         /* ===== RESPONSIVE ===== */
         /* ======================================== */
 
@@ -423,6 +454,12 @@
                 gap: 3px;
             }
 
+            .footer {
+                font-size: 0.45rem;
+                margin-top: 10px;
+                padding-top: 8px;
+            }
+
             .scan-line {
                 height: 1.5px;
             }
@@ -493,6 +530,12 @@
                 padding: 1px 5px;
             }
 
+            .footer {
+                font-size: 0.4rem;
+                margin-top: 6px;
+                padding-top: 5px;
+            }
+
             .scan-line {
                 display: none;
             }
@@ -536,7 +579,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>🎯 TikTok Room ID</th>
+                            <th>🎯 Room ID</th>
                             <th>🌐 IP Target</th>
                             <th>📊 Status</th>
                         </tr>
@@ -567,6 +610,15 @@
                 <span class="status-item">
                     <span class="led led-green"></span> UPTIME: 99.99%
                 </span>
+            </div>
+
+            <!-- ===== FOOTER COPYRIGHT ===== -->
+            <div class="footer">
+                <span class="heart">❤</span> 
+                <span>COPYRIGHT © COW CLOCK TEAM 2026</span> 
+                <span class="heart">❤</span>
+                <br>
+                <span style="font-size: 0.5rem; opacity: 0.3;">ALL RIGHTS RESERVED</span>
             </div>
         </div>
     </div>
@@ -635,16 +687,16 @@
         // TABEL SERANGAN TIKTOK
         // ==============================
 
-        // Data TikTok Room ID
-        const roomIds = [
-            'TikTok_Live_001', 'TikTok_Live_002', 'TikTok_Live_003',
-            'TikTok_Live_004', 'TikTok_Live_005', 'TikTok_Live_006',
-            'TikTok_Live_007', 'TikTok_Live_008', 'TikTok_Live_009',
-            'TikTok_Live_010', 'TikTok_Live_011', 'TikTok_Live_012',
-            'TikTok_Live_013', 'TikTok_Live_014', 'TikTok_Live_015',
-            'TikTok_Live_016', 'TikTok_Live_017', 'TikTok_Live_018',
-            'TikTok_Live_019', 'TikTok_Live_020'
-        ];
+        // ===== FUNGSI GENERATE SERIAL ID 12 DIGIT =====
+        function generateSerialId() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < 12; i++) {
+                result += chars[Math.floor(Math.random() * chars.length)];
+            }
+            // Format: XXXX-XXXX-XXXX
+            return result.slice(0, 4) + '-' + result.slice(4, 8) + '-' + result.slice(8, 12);
+        }
 
         const ipPrefixes = [
             '192.168.', '10.0.', '172.16.', '45.33.', '8.8.',
@@ -670,11 +722,11 @@
         }
 
         function generateRandomAttack() {
-            const roomId = roomIds[Math.floor(Math.random() * roomIds.length)];
+            const serialId = generateSerialId();
             const ip = generateRandomIP();
             const status = statuses[Math.floor(Math.random() * statuses.length)];
 
-            return { roomId, ip, status };
+            return { serialId, ip, status };
         }
 
         function getStatusClass(status) {
@@ -724,7 +776,7 @@
                 const statusClass = getStatusClass(item.status);
                 tr.innerHTML = `
                     <td>${item.id}</td>
-                    <td>${item.roomId}</td>
+                    <td style="font-family: 'Courier New', monospace; letter-spacing: 1px;">${item.serialId}</td>
                     <td>${item.ip}</td>
                     <td class="${statusClass}">${item.status}</td>
                 `;
@@ -795,7 +847,8 @@
             }
         }, 5000);
 
-        console.log('🖥️ ProxyUP88 Hacker Mode Activated!');
+        console.log('🖥️ ProxyUP88 Mode Activated!');
+        console.log('© COW CLOCK TEAM 2026');
     </script>
 
 </body>
