@@ -2,32 +2,801 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProxyUP88</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ProxyUP88 - Hacker Mode</title>
     <style>
-        body {
+        /* ===== RESET & BASE ===== */
+        * {
             margin: 0;
-            height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            font-family: 'Arial', sans-serif;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            position: relative;
+            padding: 10px;
         }
-        h1 {
-            font-size: 5rem;
-            color: #ffffff;
-            text-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff;
-            animation: glow 1.5s ease-in-out infinite alternate;
-            letter-spacing: 5px;
+
+        /* ===== MATRIX RAIN EFFECT (Background) ===== */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.2;
         }
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff; }
-            to { text-shadow: 0 0 30px #ff00cc, 0 0 60px #ff00cc, 0 0 90px #ff00cc; }
+
+        /* ===== KONTEN UTAMA ===== */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* ===== TERMINAL BOX ===== */
+        .terminal {
+            background: rgba(0, 0, 0, 0.88);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 20px 18px;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 65, 0.15),
+                inset 0 0 30px rgba(0, 255, 65, 0.03);
+            position: relative;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            width: 100%;
+            max-height: 98vh;
+            overflow-y: auto;
+        }
+
+        .terminal::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.05);
+        }
+        .terminal::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            border-radius: 10px;
+        }
+
+        /* ===== TERMINAL HEADER ===== */
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .dot-red { background: #ff4444; }
+        .dot-yellow { background: #ffbb33; }
+        .dot-green { background: #00ff41; }
+
+        .terminal-title {
+            color: #00ff41;
+            font-size: 0.7rem;
+            margin-left: 6px;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            word-break: break-all;
+        }
+
+        /* ===== TEKS UTAMA ===== */
+        .hacker-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff41;
+            text-shadow: 
+                0 0 10px #00ff41,
+                0 0 20px #00ff41,
+                0 0 40px #00ff41,
+                0 0 80px rgba(0, 255, 65, 0.2);
+            animation: glitch 2s infinite;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .hacker-title-sub {
+            font-size: 1.4rem;
+            margin-top: -5px;
+            animation-delay: 0.5s;
+            letter-spacing: 3px;
+        }
+
+        /* ===== GLITCH EFFECT ===== */
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 40px #00ff41;
+                transform: translate(0);
+            }
+            2% {
+                text-shadow: -2px 0 #ff00cc, 2px 0 #00ff41;
+                transform: translate(-1px, 1px);
+            }
+            4% {
+                text-shadow: 2px 0 #ff00cc, -2px 0 #00ff41;
+                transform: translate(1px, -1px);
+            }
+            6% {
+                text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+                transform: translate(0);
+            }
+            8% {
+                text-shadow: -1px 0 #00ffff, 1px 0 #ff00cc;
+                transform: translate(-1px, 1px);
+            }
+            10% {
+                text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+                transform: translate(0);
+            }
+        }
+
+        /* ===== TYPING SUBTEXT ===== */
+        .subtext {
+            color: #00cc33;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            opacity: 0.8;
+            letter-spacing: 2px;
+            border-right: 2px solid #00ff41;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: typing 3s steps(30) infinite, blink 0.8s step-end infinite;
+            max-width: 100%;
+        }
+
+        @keyframes typing {
+            0%, 20% { width: 0; }
+            40%, 80% { width: 100%; }
+            100% { width: 0; }
+        }
+
+        @keyframes blink {
+            0%, 100% { border-color: #00ff41; }
+            50% { border-color: transparent; }
+        }
+
+        /* ======================================== */
+        /* ===== TABEL SERANGAN TIKTOK ===== */
+        /* ======================================== */
+
+        .attack-table-wrapper {
+            margin-top: 15px;
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .attack-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+            color: #00ff41;
+        }
+
+        .attack-table thead {
+            background: rgba(0, 255, 65, 0.1);
+            border-bottom: 2px solid #00ff41;
+        }
+
+        .attack-table th {
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            color: #00ff41;
+            white-space: nowrap;
+        }
+
+        .attack-table td {
+            padding: 6px 6px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.08);
+            font-family: 'Courier New', monospace;
+            font-size: 0.65rem;
+            white-space: nowrap;
+        }
+
+        .attack-table tbody tr {
+            transition: background 0.3s;
+            animation: rowFlash 0.5s ease;
+        }
+
+        .attack-table tbody tr:nth-child(even) {
+            background: rgba(0, 255, 65, 0.03);
+        }
+
+        @keyframes rowFlash {
+            0% { background: rgba(0, 255, 65, 0.25); }
+            100% { background: transparent; }
+        }
+
+        /* Status colors */
+        .status-success {
+            color: #00ff41;
+        }
+        .status-failed {
+            color: #ff4444;
+        }
+        .status-pending {
+            color: #ffbb33;
+            animation: blinkPending 0.8s infinite;
+        }
+
+        @keyframes blinkPending {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ===== TABLE COUNTER ===== */
+        .table-counter {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 12px;
+            font-size: 0.6rem;
+            color: rgba(0, 255, 65, 0.5);
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .table-counter span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .counter-number {
+            color: #00ff41;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+
+        /* ===== STATUS BAR ===== */
+        .status-bar {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            color: #00ff41;
+            font-size: 0.6rem;
+            opacity: 0.6;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 255, 65, 0.05);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            white-space: nowrap;
+        }
+
+        .status-item .led {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            flex-shrink: 0;
+        }
+
+        .led-green { background: #00ff41; }
+        .led-red { background: #ff4444; animation-delay: 0.5s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.7); }
+        }
+
+        /* ===== SCANNING LINE ===== */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #00ff41, transparent);
+            animation: scan 3s linear infinite;
+            border-radius: 12px;
+            opacity: 0.3;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0.3; }
+        }
+
+        /* ======================================== */
+        /* ===== RESPONSIVE ===== */
+        /* ======================================== */
+
+        @media (max-width: 480px) {
+            .terminal {
+                padding: 12px 10px;
+                border-width: 1.5px;
+            }
+
+            .terminal-header {
+                gap: 5px;
+                margin-bottom: 8px;
+                padding-bottom: 6px;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .terminal-title {
+                font-size: 0.5rem;
+            }
+
+            .hacker-title {
+                font-size: 1.3rem;
+                letter-spacing: 2px;
+            }
+
+            .hacker-title-sub {
+                font-size: 1rem;
+                letter-spacing: 2px;
+                margin-top: -3px;
+            }
+
+            .subtext {
+                font-size: 0.6rem;
+                letter-spacing: 1px;
+                border-right-width: 1.5px;
+                margin-top: 8px;
+            }
+
+            .attack-table {
+                font-size: 0.5rem;
+            }
+
+            .attack-table th {
+                font-size: 0.45rem;
+                padding: 4px 3px;
+            }
+
+            .attack-table td {
+                font-size: 0.45rem;
+                padding: 3px 3px;
+            }
+
+            .status-bar {
+                gap: 4px;
+                margin-top: 8px;
+            }
+
+            .status-item {
+                font-size: 0.45rem;
+                padding: 2px 6px;
+                gap: 3px;
+            }
+
+            .status-item .led {
+                width: 5px;
+                height: 5px;
+            }
+
+            .table-counter {
+                font-size: 0.45rem;
+                padding: 4px 6px;
+                gap: 3px;
+            }
+
+            .scan-line {
+                height: 1.5px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .terminal {
+                padding: 18px 16px;
+            }
+
+            .hacker-title {
+                font-size: 2rem;
+            }
+
+            .hacker-title-sub {
+                font-size: 1.5rem;
+            }
+
+            .attack-table {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .terminal {
+                padding: 8px 14px;
+                max-height: 95vh;
+            }
+
+            .terminal-header {
+                margin-bottom: 5px;
+                padding-bottom: 4px;
+            }
+
+            .hacker-title {
+                font-size: 1.1rem;
+            }
+
+            .hacker-title-sub {
+                font-size: 0.9rem;
+                margin-top: -2px;
+            }
+
+            .subtext {
+                font-size: 0.5rem;
+                margin-top: 4px;
+                animation: none;
+                border-right: none;
+                white-space: normal;
+            }
+
+            .attack-table {
+                font-size: 0.4rem;
+            }
+
+            .attack-table th,
+            .attack-table td {
+                padding: 2px 3px;
+            }
+
+            .status-bar {
+                margin-top: 4px;
+                gap: 3px;
+            }
+
+            .status-item {
+                font-size: 0.4rem;
+                padding: 1px 5px;
+            }
+
+            .scan-line {
+                display: none;
+            }
+
+            .table-counter {
+                font-size: 0.4rem;
+                padding: 2px 4px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>SERVER ProxyUP88 is ONLINE</h1>
+
+    <!-- ===== CANVAS MATRIX RAIN ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- ===== KONTEN UTAMA ===== -->
+    <div class="content">
+        <div class="terminal">
+            <!-- Scanning Line -->
+            <div class="scan-line"></div>
+
+            <!-- Terminal Header -->
+            <div class="terminal-header">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+                <span class="terminal-title">PROXYUP88@ROOT:~$</span>
+            </div>
+
+            <!-- Teks Utama -->
+            <h1 class="hacker-title">SERVER ProxyUP88</h1>
+            <h1 class="hacker-title hacker-title-sub">IS ONLINE</h1>
+
+            <!-- Typing Subtext -->
+            <div class="subtext">> SYSTEM SECURE . . .</div>
+
+            <!-- ===== TABEL SERANGAN TIKTOK ===== -->
+            <div class="attack-table-wrapper">
+                <table class="attack-table" id="attackTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>🎯 TikTok Room ID</th>
+                            <th>🌐 IP Target</th>
+                            <th>📊 Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+                <div class="table-counter">
+                    <span>🔴 ATTACKS: <span class="counter-number" id="attackCount">0</span></span>
+                    <span>✅ SUCCESS: <span class="counter-number" id="successCount">0</span></span>
+                    <span>❌ FAILED: <span class="counter-number" id="failedCount">0</span></span>
+                    <span>⏳ PENDING: <span class="counter-number" id="pendingCount">0</span></span>
+                </div>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="led led-green"></span> SYSTEM: ONLINE
+                </span>
+                <span class="status-item">
+                    <span class="led led-green"></span> FIREWALL: ACTIVE
+                </span>
+                <span class="status-item">
+                    <span class="led led-red"></span> INTRUSION: 0
+                </span>
+                <span class="status-item">
+                    <span class="led led-green"></span> UPTIME: 99.99%
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPT ===== -->
+    <script>
+        // ==============================
+        // MATRIX RAIN
+        // ==============================
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+
+        function getColumnCount() {
+            const charSize = window.innerWidth < 480 ? 14 : 20;
+            return Math.floor(canvas.width / charSize);
+        }
+
+        let columns = getColumnCount();
+        let drops = Array(columns).fill(1);
+        const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        function drawMatrix() {
+            const charSize = window.innerWidth < 480 ? 14 : 20;
+            const fontSize = window.innerWidth < 480 ? 12 : 16;
+
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                const x = i * charSize;
+                const y = drops[i] * charSize;
+
+                if (y > canvas.height * 0.85) {
+                    ctx.fillStyle = '#00ff41';
+                } else {
+                    ctx.fillStyle = '#00cc33';
+                }
+                ctx.fillText(char, x, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            columns = getColumnCount();
+            drops = Array(columns).fill(1);
+        });
+
+        // ==============================
+        // TABEL SERANGAN TIKTOK
+        // ==============================
+
+        // Data TikTok Room ID
+        const roomIds = [
+            'TikTok_Live_001', 'TikTok_Live_002', 'TikTok_Live_003',
+            'TikTok_Live_004', 'TikTok_Live_005', 'TikTok_Live_006',
+            'TikTok_Live_007', 'TikTok_Live_008', 'TikTok_Live_009',
+            'TikTok_Live_010', 'TikTok_Live_011', 'TikTok_Live_012',
+            'TikTok_Live_013', 'TikTok_Live_014', 'TikTok_Live_015',
+            'TikTok_Live_016', 'TikTok_Live_017', 'TikTok_Live_018',
+            'TikTok_Live_019', 'TikTok_Live_020'
+        ];
+
+        const ipPrefixes = [
+            '192.168.', '10.0.', '172.16.', '45.33.', '8.8.',
+            '31.41.', '92.168.', '65.21.', '13.37.', '77.88.',
+            '203.45.', '89.12.', '56.78.', '43.21.', '99.88.'
+        ];
+
+        const statuses = ['SUCCESS', 'FAILED', 'PENDING'];
+
+        let attackLog = [];
+        let attackCounter = 0;
+        let successCount = 0;
+        let failedCount = 0;
+        let pendingCount = 0;
+
+        const tableBody = document.getElementById('tableBody');
+
+        function generateRandomIP() {
+            const prefix = ipPrefixes[Math.floor(Math.random() * ipPrefixes.length)];
+            const octet1 = Math.floor(Math.random() * 255);
+            const octet2 = Math.floor(Math.random() * 255);
+            return prefix + octet1 + '.' + octet2;
+        }
+
+        function generateRandomAttack() {
+            const roomId = roomIds[Math.floor(Math.random() * roomIds.length)];
+            const ip = generateRandomIP();
+            const status = statuses[Math.floor(Math.random() * statuses.length)];
+
+            return { roomId, ip, status };
+        }
+
+        function getStatusClass(status) {
+            switch(status) {
+                case 'SUCCESS': return 'status-success';
+                case 'FAILED': return 'status-failed';
+                case 'PENDING': return 'status-pending';
+                default: return '';
+            }
+        }
+
+        function updateCounters() {
+            document.getElementById('attackCount').textContent = attackCounter;
+            document.getElementById('successCount').textContent = successCount;
+            document.getElementById('failedCount').textContent = failedCount;
+            document.getElementById('pendingCount').textContent = pendingCount;
+        }
+
+        function addAttackRow() {
+            const attack = generateRandomAttack();
+            attackCounter++;
+            
+            if (attack.status === 'SUCCESS') successCount++;
+            else if (attack.status === 'FAILED') failedCount++;
+            else pendingCount++;
+
+            attackLog.unshift({
+                id: attackCounter,
+                ...attack
+            });
+
+            if (attackLog.length > 20) {
+                const removed = attackLog.pop();
+                if (removed.status === 'SUCCESS') successCount--;
+                else if (removed.status === 'FAILED') failedCount--;
+                else pendingCount--;
+            }
+
+            renderTable();
+            updateCounters();
+        }
+
+        function renderTable() {
+            tableBody.innerHTML = '';
+            attackLog.forEach((item) => {
+                const tr = document.createElement('tr');
+                const statusClass = getStatusClass(item.status);
+                tr.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.roomId}</td>
+                    <td>${item.ip}</td>
+                    <td class="${statusClass}">${item.status}</td>
+                `;
+                if (item.id === attackCounter) {
+                    tr.style.animation = 'rowFlash 0.5s ease';
+                }
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Data awal (8 baris)
+        for (let i = 0; i < 8; i++) {
+            const attack = generateRandomAttack();
+            attackCounter++;
+            if (attack.status === 'SUCCESS') successCount++;
+            else if (attack.status === 'FAILED') failedCount++;
+            else pendingCount++;
+            attackLog.push({
+                id: attackCounter,
+                ...attack
+            });
+        }
+        renderTable();
+        updateCounters();
+
+        // Tambahkan serangan baru setiap 1-3 detik
+        setInterval(() => {
+            addAttackRow();
+        }, Math.random() * 2000 + 1000);
+
+        // Update status PENDING menjadi SUCCESS/FAILED setelah beberapa waktu
+        setInterval(() => {
+            let updated = false;
+            for (let i = 0; i < attackLog.length; i++) {
+                if (attackLog[i].status === 'PENDING' && Math.random() > 0.7) {
+                    const newStatus = Math.random() > 0.4 ? 'SUCCESS' : 'FAILED';
+                    if (newStatus === 'SUCCESS') {
+                        successCount++;
+                        pendingCount--;
+                    } else {
+                        failedCount++;
+                        pendingCount--;
+                    }
+                    attackLog[i].status = newStatus;
+                    updated = true;
+                    break;
+                }
+            }
+            if (updated) {
+                renderTable();
+                updateCounters();
+            }
+        }, 3000);
+
+        // Update "INTRUSION" counter
+        setInterval(() => {
+            const intrusionEl = document.querySelector('.status-item .led-red')?.parentElement;
+            if (intrusionEl) {
+                const text = intrusionEl.textContent;
+                const match = text.match(/\d+/);
+                if (match) {
+                    const current = parseInt(match[0]);
+                    const newVal = current + Math.floor(Math.random() * 3);
+                    intrusionEl.innerHTML = `
+                        <span class="led led-red"></span> INTRUSION: ${newVal}
+                    `;
+                }
+            }
+        }, 5000);
+
+        console.log('🖥️ ProxyUP88 Hacker Mode Activated!');
+    </script>
+
 </body>
 </html>
